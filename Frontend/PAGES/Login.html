@@ -1,14 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=
-    , initial-scale=1.0"
-    />
-    <title>login.h</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+    
   </head>
-  <body></body>
+  <body>
+    <main class="login-container">
+      <div class="login-wrapper">
+        <!-- Left Column: Image & Hero Text -->
+        <div class="hero-column">
+          <section class="hero-section">
+            <img
+              src="../Images/LoginPic.png"
+              alt="Login Illustration"
+              class="hero-background"
+            />
+            <div class="hero-content">
+              <h1 class="hero-title">Votre avenir commence ici.</h1>
+              <p class="hero-subtitle">Examen en ligne sécurisé et fiable.</p>
+            </div>
+          </section>
+        </div>
+
+        <!-- Right Column: Form -->
+        <div class="form-column">
+          <form class="login-form">
+            <h2 class="welcome-text">Bienvenue à nouveau !</h2>
+
+            <div class="login-tabs">
+              <button type="button" class="tab-button active">Login</button>
+              <span class="tab-text">Se connecter</span>
+            </div>
+
+            <p class="form-description">
+              Connectez-vous pour accéder à votre espace d'examen en ligne.
+            </p>
+
+            <!-- Email -->
+            <div class="form-group">
+              <label for="email">Adresse e-mail</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="Entrez votre adresse e-mail"
+                class="form-input"
+                required
+              />
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+              <label for="password">Mot de passe</label>
+              <div class="password-input-wrapper">
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="Entrez votre mot de passe"
+                  class="form-input"
+                  required
+                />
+                <!-- eye icon -->
+                <div class="password-toggle" onclick="togglePassword()">
+                    <svg id="eye-open" xmlns="http://www.w3.org/2000/svg" class="eye-icon" fill="none" viewBox="0 0 24 24" stroke="rgb(45, 212, 191)" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.478 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                  
+                    <svg id="eye-closed" xmlns="http://www.w3.org/2000/svg" class="eye-icon hidden" fill="none" viewBox="0 0 24 24" stroke="rgb(163, 163, 163)" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.02 10.02 0 012.293-3.95m2.378-1.837A9.956 9.956 0 0112 5c4.478 0 8.268 2.943 9.542 7a9.96 9.96 0 01-4.147 5.094M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18" />
+                    </svg>
+                  </div>
+              </div>
+            </div>
+
+            <!-- Footer (checkbox + forgot link) -->
+            <div class="form-footer">
+              <label class="remember-me">
+                <input type="checkbox" class="checkbox" />
+                <span>Se souvenir de moi</span>
+              </label>
+              <a href="#" class="forgot-password">Mot de passe oublié ?</a>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="login-button">Login</button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <!-- Optional: JavaScript to toggle password -->
+    <script>
+        function togglePassword() {
+          const passwordInput = document.getElementById('password');
+          const eyeOpen = document.getElementById('eye-open');
+          const eyeClosed = document.getElementById('eye-closed');
+      
+          const isPasswordVisible = passwordInput.type === 'text';
+      
+          if (isPasswordVisible) {
+            passwordInput.type = 'password';
+            eyeOpen.classList.add('hidden');
+            eyeClosed.classList.remove('hidden');
+          } else {
+            passwordInput.type = 'text';
+            eyeOpen.classList.remove('hidden');
+            eyeClosed.classList.add('hidden');
+          }
+        }
+    </script>
+      
+  </body>
 </html>
