@@ -34,9 +34,9 @@
             <h2 class="welcome-text">Bienvenue à nouveau !</h2>
 
             <div class="login-tabs">
-              <button type="button" class="tab-button active">Login</button>
-              <span class="tab-text">Se connecter</span>
-            </div>
+              <button type="button" class="tab-button active">Se connecter</button>
+              <a href="Register.html" class="tab-button tab-register">S’inscrire</a>
+            </div>            
 
             <p class="form-description">
               Connectez-vous pour accéder à votre espace d'examen en ligne.
@@ -67,20 +67,21 @@
                 />
                 <!-- eye icon -->
                 <div class="password-toggle" onclick="togglePassword()">
-                    <svg id="eye-open" xmlns="http://www.w3.org/2000/svg" class="eye-icon" fill="none" viewBox="0 0 24 24" stroke="rgb(45, 212, 191)" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.478 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                  
-                    <svg id="eye-closed" xmlns="http://www.w3.org/2000/svg" class="eye-icon hidden" fill="none" viewBox="0 0 24 24" stroke="rgb(163, 163, 163)" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.02 10.02 0 012.293-3.95m2.378-1.837A9.956 9.956 0 0112 5c4.478 0 8.268 2.943 9.542 7a9.96 9.96 0 01-4.147 5.094M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18" />
-                    </svg>
-                  </div>
-              </div>
+                  <!-- Eye closed is visible by default -->
+                  <svg id="eye-closed" xmlns="http://www.w3.org/2000/svg" class="eye-icon" fill="none" viewBox="0 0 24 24" stroke="rgb(163, 163, 163)" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.02 10.02 0 012.293-3.95m2.378-1.837A9.956 9.956 0 0112 5c4.478 0 8.268 2.943 9.542 7a9.96 9.96 0 01-4.147 5.094M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18" />
+                  </svg>
+                
+                  <!-- Eye open is hidden by default -->
+                  <svg id="eye-open" xmlns="http://www.w3.org/2000/svg" class="eye-icon hidden" fill="none" viewBox="0 0 24 24" stroke="#49bbbd" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.478 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                </div>                
             </div>
 
             <!-- Footer (checkbox + forgot link) -->
@@ -93,7 +94,7 @@
             </div>
 
             <!-- Submit -->
-            <button type="submit" class="login-button">Login</button>
+            <button type="submit" class="login-button">Connexion</button>
           </form>
         </div>
       </div>
