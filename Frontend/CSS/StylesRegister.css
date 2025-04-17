@@ -10,8 +10,8 @@ body {
   background-color: white;
 }
 
-/* Login container */
-.login-container {
+/* Registration container */
+.register-container {
   height: 100vh;
   display: flex;
   align-items: center;
@@ -20,9 +20,9 @@ body {
   background-color: white;
 }
 
-.login-wrapper {
+.registration-wrapper {
   display: flex;
-  gap: 2rem;
+  gap: 3rem;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
@@ -69,14 +69,8 @@ body {
   color: #2c2c2c;
 }
 
-.hero-subtitle {
-  position: relative;
-  margin-top: 1.5rem;
-  font-size: 1.5rem;
-  color: #2c2c2c;
-}
+/*TOP BUTTON*/
 
-/* Form section */
 .form-column {
   width: 38%;
   margin-left: 1.25rem;
@@ -135,126 +129,109 @@ body {
   color: white;
 }
 
-.form-description {
-  margin-top: 3.5rem;
-  color: rgb(82, 82, 91);
-}
-
+/*form part*/
+/* ====== General Form Group Styling ====== */
 .form-group {
-  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 0.75rem;
+/* ====== Labels ====== */
+.form-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 6px;
 }
 
+/* ====== Input & Select Styling ====== */
 .form-input,
-.password-input-wrapper {
-  width: 100%;
-  padding: 1rem 2rem;
-  border: 1px solid rgb(45, 212, 191);
+select {
+  padding: 14px 24px;
+  font-size: 15px;
+  font-weight: 400;
   border-radius: 40px;
-  font-size: 1rem;
-  font-weight: 300;
-  color: rgb(163, 163, 163);
-}
-
-.password-input-wrapper {
-  display: flex;
-  gap: 2.5rem;
-  align-items: center;
-}
-
-.password-input-wrapper input {
-  border: none;
+  border: 1px solid rgba(73, 187, 189, 1);
+  background-color: #fff;
+  color: #333;
   outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-input::placeholder {
+  color: #aaa;
+}
+
+select:invalid {
+  color: #aaa;
+}
+
+.form-input:focus,
+select:focus {
+  border-color: rgba(35, 165, 167, 1);
+  box-shadow: 0 0 0 3px rgba(73, 187, 189, 0.2);
+}
+
+/* ====== Group Layouts (Double Columns) ====== */
+.name-group,
+.details-group {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.name-group .form-group,
+.details-group .form-group {
+  flex: 1;
+  min-width: 140px;
+}
+
+/* ====== Date Select Layout ====== */
+.date-group {
+  display: flex;
+  gap: 12px;
   width: 100%;
-  padding: 0;
 }
 
-.password-toggle {
-  width: 18px;
-  aspect-ratio: 1;
-  object-fit: contain;
+.date-group select {
+  flex: 1;
 }
 
-.form-footer {
-  display: flex;
-  gap: 11.9rem;
-  margin-top: 1.5rem;
-  font-size: 0.75rem;
-  font-weight: 300;
-}
-
-.remember-me {
-  display: flex;
-  gap: 0.625rem;
-  align-items: center;
-  cursor: pointer;
-}
-
-.checkbox {
-  width: 15px;
-  height: 15px;
-  border: 1px solid black;
-  background-color: white;
-}
-
-.forgot-password {
-  color: inherit;
-  text-decoration: none;
-  color: #49bbbd;
-}
-
-.login-button {
-  align-self: flex-start;
-  margin-top: 4rem;
+/* ====== Submit Button ====== */
+.submit-button {
+  margin-top: 28px;
   margin-right: 14rem;
-  margin-left: 14rem;
-  padding: 0.875rem 4rem;
-  background-color: #49bbbd;
+  padding: 14px 48px;
   border: none;
   border-radius: 36px;
-  color: white;
-  width: 232px;
+  background-color: rgba(73, 187, 189, 1);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.login-button:hover {
+.submit-button:hover {
   background-color: rgb(45, 212, 191);
 }
 
-.login-button:active {
+.submit-button:active {
   background-color: #30d0d3;
 }
-/* eye icon */
 
-.password-toggle {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.eye-icon {
-  width: 24px;
-  height: 24px;
-  transition: opacity 0.2s ease;
-}
-
-.hidden {
-  display: none;
-}
-
-/* Responsive styles */
+/* ---------- RESPONSIVE: Tablets (768px and down) ---------- */
 @media (max-width: 768px) {
-  .login-container {
-    padding: 1.25rem 1.25rem 6rem;
+  .register-container {
+    flex-direction: column;
+    padding: 2rem 1.5rem;
+    height: auto;
   }
 
-  .login-wrapper {
+  .registration-wrapper {
     flex-direction: column;
+    gap: 1.5rem;
   }
 
   .hero-column,
@@ -264,19 +241,65 @@ body {
   }
 
   .hero-section {
-    margin-top: 2.5rem;
+    min-height: 400px;
   }
 
   .hero-content {
-    padding: 6rem 1.25rem 3.5rem;
+    padding: 250px 2rem 2rem;
   }
 
-  .login-form {
-    margin-top: 2.5rem;
+  .hero-title {
+    font-size: 1.75rem;
+    text-align: center;
   }
 
-  .login-button {
-    margin-top: 2.5rem;
-    padding: 0.875rem 1.25rem;
+  .login-tabs {
+    width: 100%;
+    max-width: 100%;
+    flex-wrap: wrap;
+    height: auto;
+  }
+
+  .tab-button {
+    width: 100%;
+    max-width: 100%;
+    margin: 0.25rem 0;
+  }
+
+  .name-group,
+  .details-group,
+  .date-group {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+/* ---------- RESPONSIVE: Mobile (480px and down) ---------- */
+@media (max-width: 480px) {
+  .register-container {
+    padding: 1rem;
+  }
+
+  .hero-content {
+    padding: 200px 1rem 2rem;
+  }
+
+  .hero-title {
+    font-size: 1.5rem;
+  }
+
+  .form-label {
+    font-size: 14px;
+  }
+
+  .form-input,
+  select {
+    font-size: 14px;
+    padding: 12px 20px;
+  }
+
+  .submit-button {
+    font-size: 14px;
+    padding: 12px 36px;
   }
 }
