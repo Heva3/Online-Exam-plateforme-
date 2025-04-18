@@ -4,48 +4,129 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Formulaire d'inscription</title>
-    <link rel="stylesheet" href="../css/style.css" /> <!-- Adjusted path if needed -->
+    <link rel="stylesheet" href="../css/StylesRegister.css" />
   </head>
   <body>
-    <form id="registerForm">
-      <label for="email">Email :</label><br /><br />
-      <input type="email" id="email" name="email" required /><br /><br />
+    <main class="register-container">
+      <div class="registration-wrapper">
 
-      <label for="nom">Nom :</label><br /><br />
-      <input type="text" id="nom" name="nom" required /><br /><br /> <!-- Removed random "n" -->
+        <!-- LEFT SIDE: HERO SECTION -->
+        <div class="hero-column">
+          <section class="hero-section">
+            <img
+              src="../Images/RegistrationPic.png"
+              alt="Login Illustration"
+              class="hero-background"
+            />
+            <div class="hero-content">
+              <h1 class="hero-title">
+                Inscrivez-vous pour accéder à la plateforme d'examen.
+              </h1>
+            </div>
+          </section>
+        </div>
 
-      <label for="prenom">Prénom :</label><br /><br />
-      <input type="text" id="prenom" name="prenom" required /><br /><br />
+        <!-- RIGHT SIDE: REGISTRATION FORM -->
+        <div class="form-container">
+          <form class="registration-form" action="/submit_form" method="POST">
+            <h1 class="welcome-text">Inscription à la plateforme !</h1>
 
-      <label for="date_naissance">Date de naissance :</label><br /><br />
-      <input
-        type="date"
-        id="date_naissance"
-        name="date_naissance"
-        required
-      /><br /><br />
+            <div class="login-tabs">
+              <a href="Login.html" class="tab-button tab-register">Se connecter</a>
+              <button type="button" class="tab-button active">S’inscrire</button>
+            </div>
 
-      <label for="role">Sexe :</label><br /><br /> <!-- Optional: "Sex" → "Sexe" for French consistency -->
-      <input type="radio" id="student" name="role" value="student" required />
-      <label for="student">Étudiant</label><br />
-      <input type="radio" id="teacher" name="role" value="teacher" />
-      <label for="teacher">Enseignant</label><br /><br />
+            <!-- Email -->
+            <div class="form-group">
+              <label for="email" class="form-label">Adresse e-mail</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-input"
+                placeholder="Entrez votre adresse e-mail"
+                required
+              />
+            </div>
 
-      <label for="etablissement">Établissement :</label><br /><br />
-      <input
-        type="text"
-        id="etablissement"
-        name="etablissement"
-        required
-      /><br /><br />
+            <!-- Nom & Prénom -->
+            <div class="name-group">
+              <div class="form-group">
+                <label for="nom" class="form-label">Nom</label>
+                <input
+                  type="text"
+                  id="nom"
+                  name="nom"
+                  class="form-input"
+                  placeholder="Entrez votre nom"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="prenom" class="form-label">Prénom</label>
+                <input
+                  type="text"
+                  id="prenom"
+                  name="prenom"
+                  class="form-input"
+                  placeholder="Entrez votre prénom"
+                  required
+                />
+              </div>
+            </div>
 
-      <label for="filiere">Filière :</label><br /><br />
-      <input type="text" id="filiere" name="filiere" required /><br /><br />
+            <!-- Date de naissance -->
+            <div class="form-group">
+              <label for="date" class="form-label">Date de naissance</label>
+              <input 
+                type="date"
+                id="date"
+                name="date_naissance"
+                class="form-input"
+                required
+              />
+            </div>
 
-      <button type="submit">S'inscrire</button>
-    </form>
+            <!-- Sexe & Filière -->
+            <div class="details-group">
+              <div class="form-group">
+                <label for="sexe" class="form-label">Sexe</label>
+                <select id="sexe" name="sexe" class="form-input" required>
+                  <option disabled selected value="">Sélectionnez</option>
+                  <option value="homme">Homme</option>
+                  <option value="femme">Femme</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="filiere" class="form-label">Filière</label>
+                <select id="filiere" name="filiere" class="form-input" required>
+                  <option disabled selected value="">Sélectionnez</option>
+                  <option value="informatique">Informatique</option>
+                  <option value="maths">Mathématiques</option>
+                  <option value="physique">Physique</option>
+                </select>
+              </div>
+            </div>
 
-    <!-- ✅ Link your JS here -->
+            <!-- Établissement -->
+            <div class="form-group">
+              <label for="etablissement" class="form-label">Établissement</label>
+              <input
+                type="text"
+                id="etablissement"
+                name="etablissement"
+                class="form-input"
+                placeholder="Entrez le nom de votre établissement"
+                required
+              />
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="submit-button">Inscription</button>
+          </form>
+        </div>
+      </div>
+    </main>
     <script src="../js/main.js"></script>
   </body>
 </html>
