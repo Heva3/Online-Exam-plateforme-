@@ -4,16 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Formulaire d'inscription</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="../css/style.css" /> <!-- Adjusted path if needed -->
   </head>
   <body>
-    <form action="/submit_form" method="POST">
+    <form id="registerForm">
       <label for="email">Email :</label><br /><br />
       <input type="email" id="email" name="email" required /><br /><br />
-      <label for="nom">Nom :</label><br /><br />n
-      <input type="text" id="nom" name="nom" required /><br /><br />
+
+      <label for="nom">Nom :</label><br /><br />
+      <input type="text" id="nom" name="nom" required /><br /><br /> <!-- Removed random "n" -->
+
       <label for="prenom">Prénom :</label><br /><br />
       <input type="text" id="prenom" name="prenom" required /><br /><br />
+
       <label for="date_naissance">Date de naissance :</label><br /><br />
       <input
         type="date"
@@ -21,11 +24,13 @@
         name="date_naissance"
         required
       /><br /><br />
-      <label for="role">Sex</label><br /><br />
+
+      <label for="role">Sexe :</label><br /><br /> <!-- Optional: "Sex" → "Sexe" for French consistency -->
       <input type="radio" id="student" name="role" value="student" required />
-      <label for="student">Etudiant</label><br />
+      <label for="student">Étudiant</label><br />
       <input type="radio" id="teacher" name="role" value="teacher" />
       <label for="teacher">Enseignant</label><br /><br />
+
       <label for="etablissement">Établissement :</label><br /><br />
       <input
         type="text"
@@ -37,7 +42,10 @@
       <label for="filiere">Filière :</label><br /><br />
       <input type="text" id="filiere" name="filiere" required /><br /><br />
 
-      <button type="submit">sign in</button>
+      <button type="submit">S'inscrire</button>
     </form>
+
+    <!-- ✅ Link your JS here -->
+    <script src="../js/main.js"></script>
   </body>
 </html>

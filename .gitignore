@@ -1,1 +1,16 @@
+# Node modules
+node_modules/
+
+# Build and output folders
+dist/
+build/
+
+# Logs
+*.log
+
+# Environment files
+.env
+
+# Editor settings
+.vscode/
 

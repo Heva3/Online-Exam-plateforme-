@@ -1,18 +1,11 @@
-<<<<<<< HEAD
 const http = require('http');
+const app = require('./app'); // <-- Import your Express app
 
-const server = http.createServer((req, res) => {
-  res.end('Hello Aya eur en écoute sur http://localhost:3000');
-});
-=======
-const http = require('http'); // <= cette ligne manquait
+const PORT = process.env.PORT || 3000;
 
-const server = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Hello Aya ! Bienvenue sur ton backend 🎉');
+const server = http.createServer(app); // <-- Use the Express app here
+
+server.listen(PORT, () => {
+  console.log(`✅ Serveur en écoute sur http://localhost:${PORT}`);
 });
 
-server.listen(3000, () => {
-  console.log('Serveur en écoute sur http://localhost:3000');
-});
->>>>>>> 1e50d26d42737002fe6feb596b94eddf6957d054
