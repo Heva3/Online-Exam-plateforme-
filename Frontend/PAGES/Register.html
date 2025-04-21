@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Formulaire d'inscription</title>
-    <link rel="stylesheet" href="../CSS/StylesRegister.css" />
+    <link rel="stylesheet" href="../css/StylesRegister.css" />
   </head>
-
   <body>
     <main class="register-container">
       <div class="registration-wrapper">
-        <!-- LEFT SIDE: HERO SECTION  -->
-        <!--Done-->
+
+        <!-- LEFT SIDE: HERO SECTION -->
         <div class="hero-column">
           <section class="hero-section">
             <img
@@ -27,25 +26,23 @@
           </section>
         </div>
 
-        <!-- ================= RIGHT SIDE: REGISTRATION FORM ================= -->
+        <!-- RIGHT SIDE: REGISTRATION FORM -->
         <div class="form-container">
-          <form class="registration-form">
+          <form class="registration-form" action="/submit_form" method="POST">
             <h1 class="welcome-text">Inscription à la plateforme !</h1>
 
             <div class="login-tabs">
-              <a href="Login.html" class="tab-button tab-register"
-                >Se connecter</a
-              >
-              <button type="button" class="tab-button active">
-                S’inscrire
-              </button>
+              <a href="Login.html" class="tab-button tab-register">Se connecter</a>
+              <button type="button" class="tab-button active">S’inscrire</button>
             </div>
+
             <!-- Email -->
             <div class="form-group">
               <label for="email" class="form-label">Adresse e-mail</label>
               <input
                 type="email"
                 id="email"
+                name="email"
                 class="form-input"
                 placeholder="Entrez votre adresse e-mail"
                 required
@@ -59,6 +56,7 @@
                 <input
                   type="text"
                   id="nom"
+                  name="nom"
                   class="form-input"
                   placeholder="Entrez votre nom"
                   required
@@ -69,6 +67,7 @@
                 <input
                   type="text"
                   id="prenom"
+                  name="prenom"
                   class="form-input"
                   placeholder="Entrez votre prénom"
                   required
@@ -79,23 +78,29 @@
             <!-- Date de naissance -->
             <div class="form-group">
               <label for="date" class="form-label">Date de naissance</label>
-              <input type="date" id="date" class="form-input" name="date" />
+              <input 
+                type="date"
+                id="date"
+                name="date_naissance"
+                class="form-input"
+                required
+              />
             </div>
 
             <!-- Sexe & Filière -->
             <div class="details-group">
               <div class="form-group">
                 <label for="sexe" class="form-label">Sexe</label>
-                <select id="sexe" class="form-input" required>
-                  <option disabled selected>Sélectionnez</option>
+                <select id="sexe" name="sexe" class="form-input" required>
+                  <option disabled selected value="">Sélectionnez</option>
                   <option value="homme">Homme</option>
                   <option value="femme">Femme</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="filiere" class="form-label">Filière</label>
-                <select id="filiere" class="form-input" required>
-                  <option disabled selected>Sélectionnez</option>
+                <select id="filiere" name="filiere" class="form-input" required>
+                  <option disabled selected value="">Sélectionnez</option>
                   <option value="informatique">Informatique</option>
                   <option value="maths">Mathématiques</option>
                   <option value="physique">Physique</option>
@@ -105,12 +110,11 @@
 
             <!-- Établissement -->
             <div class="form-group">
-              <label for="etablissement" class="form-label"
-                >Établissement</label
-              >
+              <label for="etablissement" class="form-label">Établissement</label>
               <input
                 type="text"
                 id="etablissement"
+                name="etablissement"
                 class="form-input"
                 placeholder="Entrez le nom de votre établissement"
                 required
@@ -123,5 +127,6 @@
         </div>
       </div>
     </main>
+    <script src="../js/main.js"></script>
   </body>
 </html>
