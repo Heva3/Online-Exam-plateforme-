@@ -1,68 +1,54 @@
-
-
-
-
-
-// 👇 NEW: Import and use the auth routes
-const authRoutes = require('./routes/authRoutes'); // Make sure the path is correct
-app.use('/api/auth', authRoutes); // All auth-related routes will start with /api/auth
-
-module.exports = app;
-
- // app.js
+// backend/app.js
 const express = require('express');
-const mysql = require('mysql2');
 const cors = require('cors');
-const bodyParser = require('body-parser');
-const db = require('./config/db');
+const dotenv = require('dotenv');
+const connectDB = require('./config/db');
+const path = require('path');
+
+// Load environment variables
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 const app = express();
 
-// Middleware
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// 1. Database Connection
+connectDB();
 
-// Route de test
+// 2. Global Middlewares
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:8080', // Match your frontend port
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Body parsers
+app.use(express.json({ limit: '10kb' })); // Limit payload size
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+
+// 3. Routes
 app.get('/', (req, res) => {
   res.send("Bienvenue sur le backend de la plateforme d'examen 🎓");
 });
 
-// Route de login
-app.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(400).json({ message: 'Champs requis manquants' });
-  }
+// Auth Routes
+const authRoutes = require('./routes/authRoutes');
+app.use('/api/auth', authRoutes);
 
-  const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
-  db.query(query, [email, password], (err, results) => {
-    if (err) return res.status(500).json({ message: 'Erreur serveur' });
+// 4. Error Handling (should be last middleware)
+app.use((err, req, res, next) => {
+  err.statusCode = err.statusCode || 500;
+  err.status = err.status || 'error';
 
-    if (results.length > 0) {
-      res.status(200).json({ message: 'Connexion réussie', user: results[0] });
-    } else {
-      res.status(401).json({ message: 'Email ou mot de passe incorrect' });
-    }
+  res.status(err.statusCode).json({
+    status: err.status,
+    message: err.message,
+    error: process.env.NODE_ENV === 'development' ? err.stack : undefined
   });
 });
 
-// Route de register (ajoutée par Abir)
-app.post('/register', (req, res) => {
-  const { fullname, email, password } = req.body;
-  if (!fullname || !email || !password) {
-    return res.status(400).json({ message: 'Tous les champs sont requis' });
-  }
-
-  const query = 'INSERT INTO users (fullname, email, password) VALUES (?, ?, ?)';
-  db.query(query, [fullname, email, password], (err, result) => {
-    if (err) {
-      console.error('Erreur MySQL :', err);
-      return res.status(500).json({ message: 'Erreur lors de l\'inscription' });
-    }
-    res.status(201).json({ message: 'Utilisateur inscrit avec succès' });
-  });
+// Handle 404 routes
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
 module.exports = app;
- 
