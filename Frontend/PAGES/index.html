@@ -11,35 +11,3 @@
     
 </body>
 </html>
-import tkinter as tk
-from tkinter import Toplevel
-from PIL import Image, ImageTk
-
-# Fonction pour ouvrir une nouvelle interface
-def open_new_interface(title):
-    new_window = Toplevel(root)
-    new_window.title(title)
-    new_window.geometry("300x200")
-    label = tk.Label(new_window, text=f"Bienvenue dans l'interface {title}!", font=("Arial", 14))
-    label.pack(pady=60)
-
-# Créer la fenêtre principale
-root = tk.Tk()
-root.title("Interface principale")
-root.geometry("600x300")
-
-# Charger les images (ajuste la taille si besoin)
-img1 = Image.open("image1.png").resize((200, 200))
-img2 = Image.open("image2.png").resize((200, 200))
-
-img1_tk = ImageTk.PhotoImage(img1)
-img2_tk = ImageTk.PhotoImage(img2)
-
-# Boutons avec les images
-button1 = tk.Button(root, image=img1_tk, command=lambda: open_new_interface("1"))
-button2 = tk.Button(root, image=img2_tk, command=lambda: open_new_interface("2"))
-
-button1.pack(side="left", padx=50, pady=20)
-button2.pack(side="right", padx=50, pady=20)
-
-root.mainloop()

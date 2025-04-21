@@ -2,7 +2,7 @@
   const loginForm = document.querySelector(".login-form");
 
   loginForm.addEventListener("submit", async (e) =>{
-    e.preventDefault(); // empêche le rechargement de la page
+    e.preventDefault();// empêche le rechargement de la page
 
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
