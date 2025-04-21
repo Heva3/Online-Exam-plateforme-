@@ -1,0 +1,52 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fffefc;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .message-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  }
+  
+  .message-text {
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #000;
+  }
+  
+  .back-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #49bbbd;
+    color: #fff;
+    border-radius: 36px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background 0.3s ease;
+  }
+  
+  .back-btn:hover {
+    background-color: #3aa6a9;
+  }
+  

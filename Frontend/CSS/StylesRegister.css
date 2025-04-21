@@ -66,7 +66,7 @@ body {
   position: relative;
   font-size: 2.25rem;
   font-weight: 700;
-  color: #2c2c2c;
+  color: #0a0a23;
 }
 
 /*TOP BUTTON*/
@@ -199,9 +199,14 @@ select:focus {
 }
 
 /* ====== Submit Button ====== */
+.container {
+  display: flex;
+  justify-content: flex-start; /* or center / space-between depending on your goal */
+}
+
 .submit-button {
   margin-top: 28px;
-  margin-right: 14rem;
+  margin-left: 14rem;
   padding: 14px 48px;
   border: none;
   border-radius: 36px;
@@ -210,7 +215,7 @@ select:focus {
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  width: 232px;
 }
 
 .submit-button:hover {
@@ -275,9 +280,10 @@ select:focus {
 }
 
 /* ---------- RESPONSIVE: Mobile (480px and down) ---------- */
-@media (max-width: 480px) {
-  .register-container {
-    padding: 1rem;
+@media (max-width: 768px) {
+  .login-tabs {
+    padding: 1.25rem 1.25rem 6rem;
+    margin-top: 2rem;
   }
 
   .hero-content {
