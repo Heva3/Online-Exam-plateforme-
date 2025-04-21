@@ -1,3 +1,14 @@
+
+
+
+
+
+// 👇 NEW: Import and use the auth routes
+const authRoutes = require('./routes/authRoutes'); // Make sure the path is correct
+app.use('/api/auth', authRoutes); // All auth-related routes will start with /api/auth
+
+module.exports = app;
+
  // app.js
 const express = require('express');
 const mysql = require('mysql2');
