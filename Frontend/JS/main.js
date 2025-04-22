@@ -24,7 +24,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
 <script>
   const loginForm = document.querySelector(".login-form");
 
-  loginForm.addEventListener("submit", async (e) =>{
+  loginForm.addEventListener("submit", async (e) = {
     e.preventDefault();// empêche le rechargement de la page
 
     const email = document.getElementById("email").value;
@@ -33,17 +33,17 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
     // On prépare les données en JSON
     const data = {
       email: email,
-      password: password
-    };
+      password: password,
+    ;
 
     try {
       const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data) // envoie les données en JSON
-      });
+          "Content-Type": "application/json",
+        ,
+        body: JSON.stringify(data), // envoie les données en JSON
+      );
 
       const result = await response.json();
 
@@ -52,14 +52,12 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
         console.log(result);
         // Tu peux rediriger vers le dashboard ici :
         // window.location.href = "teacher_dashboard.html";
-      } 
       else {
         alert("❌ Erreur de connexion : " + result.message);
-      }
-    } 
+      
     catch (error) {
       console.error("Erreur réseau :", error);
       alert("Erreur de connexion au serveur");
-    }
-  });
+    
+  );
 </script>
