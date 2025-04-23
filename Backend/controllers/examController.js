@@ -1,14 +1,29 @@
 const Exam = require('../models/Exam');
 const Question = require('../models/Question');
 
-//  Créer un examen
+
+ 
+  
+
+
+ 
+// Créer un examen
 exports.createExam = async (req, res) => {
   try {
     const { title, description, questionIds, createdBy } = req.body;
-    
-    // Optionnel : vérifier que toutes les questions existent
-    const questions = await Question.find({ _id: { $in: questionIds } });
 
+    // Validation des champs requis
+    if (!title || !description || !questionIds || !createdBy) {
+      return res.status(400).json({ message: 'Tous les champs sont obligatoires' });
+    }
+
+    // Vérifier que toutes les questions existent
+    const questions = await Question.find({ _id: { $in: questionIds } });
+    if (questions.length !== questionIds.length) {
+      return res.status(404).json({ message: 'Certaines questions n\'existent pas' });
+    }
+
+    //Création de l'examen
     const exam = new Exam({
       title,
       description,
@@ -17,12 +32,22 @@ exports.createExam = async (req, res) => {
     });
 
     await exam.save();
-    res.status(201).json({ message: 'Exam created successfully', exam });
+
+    //  Réponse propre
+    res.status(201).json({
+      message: 'Examen créé avec succès',
+      exam: {
+        id: exam._id,
+        title: exam.title,
+        description: exam.description,
+        questions: exam.questions,
+        createdBy: exam.createdBy
+      }
+    });
   } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
   }
 };
-
 //  Récupérer tous les examens
 exports.getAllExams = async (req, res) => {
   try {

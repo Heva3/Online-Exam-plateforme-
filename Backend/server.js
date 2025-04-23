@@ -23,7 +23,7 @@ process.on('uncaughtException', (err) => {
 
 // Start server
 server.listen(PORT, () => {
-  console.log(`✅ Serveur en écoute sur http://localhost:${PORT}`);
+  console.log(` Serveur en écoute sur http://localhost:${PORT}`);
   
   // Optional: Log NODE_ENV
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);

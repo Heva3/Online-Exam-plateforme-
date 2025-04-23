@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 
-const questionSchema = new mongoose.Schema({
-  text: { type: String, required: true },
-  options: [{ type: String, required: true }],
-  correctAnswer: { type: String, required: true },
+const examSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  description: { type: String },
+  questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }],
+  createdBy: { type: String, required: true } // ou ObjectId si tu as un User model
+}, {
+  timestamps: true // Ajoute createdAt et updatedAt automatiquement
 });
 
-module.exports = mongoose.model('Question', questionSchema);
+module.exports = mongoose.model('Exam', examSchema);
