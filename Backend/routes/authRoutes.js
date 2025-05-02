@@ -1,5 +1,6 @@
 const express = require('express');
 const authController = require('../controllers/authController');
+
 const router = express.Router();
 
 // @route    POST /api/auth/register
@@ -25,13 +26,6 @@ router.patch('/updatePassword', authController.protect, authController.updatePas
 // @route    GET /api/auth/me
 // @desc     Get current user info (Obtenir les infos de l'utilisateur connecté)
 // @access   Private
-router.get('/me', authController.protect, (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    data: {
-      user: req.user
-    }
-  });
-});
+router.get('/me', authController.protect, authController.getMe);
 
 module.exports = router;

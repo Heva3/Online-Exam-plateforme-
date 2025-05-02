@@ -3,7 +3,6 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
-  // From your registration form
   email: {
     type: String,
     required: [true, 'Email is required'],
@@ -40,8 +39,6 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Institution is required'],
     trim: true
   },
-  
-  // For authentication
   password: {
     type: String,
     required: [true, 'Password is required'],
@@ -75,21 +72,32 @@ const userSchema = new mongoose.Schema({
   toObject: { virtuals: true }
 });
 
-// Password encryption middleware
+// Encrypt password before saving
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
-  
+
   this.password = await bcrypt.hash(this.password, 12);
   this.passwordConfirm = undefined;
+
+  if (!this.isNew) {
+    this.passwordChangedAt = Date.now() - 1000;
+  }
+
   next();
 });
 
-// Instance method to check password
+// Hide inactive users from queries (optional)
+userSchema.pre(/^find/, function(next) {
+  this.find({ active: { $ne: false } });
+  next();
+});
+
+// Instance method to compare passwords
 userSchema.methods.correctPassword = async function(candidatePassword, userPassword) {
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 
-// Check if password was changed after token issued
+// Check if password was changed after JWT was issued
 userSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
   if (this.passwordChangedAt) {
     const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);

@@ -1,18 +1,29 @@
 const jwt = require('jsonwebtoken');
 
 const authMiddleware = (req, res, next) => {
-  const token = req.header('Authorization');
+  let token;
+
+  // Check if Authorization header exists and starts with 'Bearer'
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
 
   if (!token) {
-    return res.status(401).json({ message: 'Access denied. No token provided.' });
+    return res.status(401).json({
+      status: 'fail',
+      message: 'Access denied. No token provided.'
+    });
   }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // On stocke l'utilisateur décodé dans req.user
+    req.user = decoded; // Attach decoded user info to request
     next();
   } catch (err) {
-    res.status(400).json({ message: 'Invalid token.' });
+    res.status(401).json({
+      status: 'fail',
+      message: 'Invalid token.'
+    });
   }
 };
 
