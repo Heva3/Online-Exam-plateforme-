@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const validator = require('validator');
-const bcrypt = require('bcryptjs');
+// models/User.js
+
+import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
   email: {
