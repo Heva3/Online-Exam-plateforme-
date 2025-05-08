@@ -1,31 +1,18 @@
-const express = require('express');
-const authController = require('../controllers/authController');
-
+// routes/authRoutes.js
+import express from 'express';
+import {
+  register,
+  login,
+  forgotPassword,
+  resetPassword
+} from '../controllers/authController.js';
 const router = express.Router();
-
-// @route    POST /api/auth/register
-// @desc     Register new user (Inscription)
-// @access   Public
-router.post('/register', authController.register);
-
-// @route    POST /api/auth/login
-// @desc     Login user (Connexion)
-// @access   Public
-router.post('/login', authController.login);
-
-// @route    POST /api/auth/forgotPassword
-// @desc     Forgot password (Mot de passe oublié)
-// @access   Public
-router.post('/forgotPassword', authController.forgotPassword);
-
-// @route    PATCH /api/auth/updatePassword
-// @desc     Update password (Mettre à jour le mot de passe)
-// @access   Private (requires auth)
-router.patch('/updatePassword', authController.protect, authController.updatePassword);
-
-// @route    GET /api/auth/me
-// @desc     Get current user info (Obtenir les infos de l'utilisateur connecté)
-// @access   Private
-router.get('/me', authController.protect, authController.getMe);
-
-module.exports = router;
+// Inscription
+router.post('/register', register);
+//Connexion
+router.post('/login', login);
+//  Mot de passe oublié (vérifie si l'email existe)
+router.post('/forgot-password', forgotPassword);
+//Réinitialisation du mot de passe
+router.post('/reset-password', resetPassword);
+export default router;
