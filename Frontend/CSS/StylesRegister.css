@@ -87,7 +87,7 @@ body {
 .welcome-text {
   text-align: center;
   align-self: center;
-  margin-bottom: 1.5rem; /* Adds space below the heading */
+  margin-bottom: 1.5rem; 
 }
 
 .login-tabs {
@@ -225,6 +225,26 @@ select:focus {
 .submit-button:active {
   background-color: #30d0d3;
 }
+
+/*Star effect*/
+.stars {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: #FFF2E2;
+  transform: rotate(45deg);
+  box-shadow: 0 0 10px #FFF2E2;
+  opacity: 1;
+  transition: transform 0.5s ease-out, opacity 0.5s ease-in-out;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.stars.large {
+  width: 10px;
+  height: 10px;
+}
+
 
 /* ---------- RESPONSIVE: Tablets (768px and down) ---------- */
 @media (max-width: 768px) {

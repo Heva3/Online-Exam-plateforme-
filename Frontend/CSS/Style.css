@@ -248,6 +248,25 @@ body {
   display: none;
 }
 
+/*Star effect*/
+.stars {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: #FFF2E2;
+  transform: rotate(45deg);
+  box-shadow: 0 0 10px #FFF2E2;
+  opacity: 1;
+  transition: transform 0.5s ease-out, opacity 0.5s ease-in-out;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.stars.large {
+  width: 10px;
+  height: 10px;
+}
+
 /* Media Queries */
 @media (max-width: 768px) {
   body,

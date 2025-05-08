@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard UI</title>
+    <link rel="stylesheet" href="../CSS/S_D_mes_examens.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <div class="logo">
+          <img src="../Images/Logo2.svg" alt="Logo" class="profile-img" />
+          <button
+            class="sidebar-toggle"
+            id="toggleBtn"
+            aria-label="Toggle Sidebar"
+          >
+            <i class="fas fa-chevron-left"></i>
+          </button>
+        </div>
+        <nav class="nav">
+          <a href="../PAGES/student_dashboard.html" class="nav-item">
+            <i class="fas fa-home"></i> <span class="nav-text">Accueil</span>
+          </a>
+          <a href="../PAGES/S_D_mes_examens.html" class="nav-item">
+            <i class="fas fa-file-alt"></i>
+            <span class="nav-text">Mes Examens</span>
+          </a>
+          <a href="../PAGES/S_D_resultats.html" class="nav-item active">
+            <i class="fas fa-chart-bar"></i>
+            <span class="nav-text">Résultats</span>
+          </a>
+          <a href="../PAGES/S_D_mon_profil.html" class="nav-item">
+            <i class="fas fa-user"></i> <span class="nav-text">Mon Profil</span>
+          </a>
+          <a href="../PAGES/index.html" class="nav-item logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="nav-text">Déconnexion</span>
+          </a>
+        </nav>
+      </aside>
+
+
+    <script src="../JS/S_D_mes_examens.js"></script>
+  </body>
+</html>
