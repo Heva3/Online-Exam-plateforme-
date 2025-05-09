@@ -1,13 +1,9 @@
-// Sidebar toggle logic
-document.getElementById("toggleBtn").addEventListener("click", function () {
-  const sidebar = document.getElementById("sidebar");
-  sidebar.classList.toggle("collapsed");
+// Example JavaScript functionality for buttons
+document.querySelector('.btn').addEventListener('click', function () {
+  alert('Examen en cours...');
 });
-// Toggle user dropdown
-// Show dropdown menu when clicking the avatar
-const avatarBtn = document.getElementById("avatarBtn");
-const dropdownMenu = document.getElementById("dropdownMenu");
 
-avatarBtn.addEventListener("click", function () {
-  dropdownMenu.classList.toggle("show");
+document.querySelectorAll('.btn')[1].addEventListener('click', function () {
+  alert('Création d\'un examen...');
 });
+

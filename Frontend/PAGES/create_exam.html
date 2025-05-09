@@ -4,7 +4,262 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PROJECTS</title>
-    <link rel="stylesheet" href="../css/style.css" />
-    <body></body>
+    <link rel="stylesheet" href="../css/Create_exam.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
   </head>
+
+  <body>
+    <div class="main-wrapper">
+      <div class="container">
+        <h1>Créer un Nouvel Examen</h1>
+
+        <!-- Section Information de l'Examen -->
+        <section class="section">
+          <h2>Informations sur l'Examen</h2>
+          <form id="exam-form">
+            <div class="input-group">
+              <label for="exam-title">
+                <i class="fas fa-pencil-alt"></i> Titre de l'Examen :
+              </label>
+              <input
+                type="text"
+                id="exam-title"
+                placeholder="Entrez le titre de l'examen"
+                required
+              />
+            </div>
+
+            <div class="input-group">
+              <label for="exam-description">
+                <i class="fas fa-align-left"></i> Description de l'Examen :
+              </label>
+              <textarea
+                id="exam-description"
+                placeholder="Entrez la description de l'examen"
+                required
+              ></textarea>
+            </div>
+
+            <div class="input-group">
+              <label for="target-audience">
+                <i class="fas fa-users"></i> Public Cible :
+              </label>
+              <input
+                type="text"
+                id="target-audience"
+                placeholder="Exemple : 2ème année MIP, S4, Groupe A"
+                required
+              />
+            </div>
+
+            <div class="input-group">
+              <label for="unique-link">
+                <i class="fas fa-link"></i> Lien Unique :
+              </label>
+              <input type="text" id="unique-link" readonly />
+            </div>
+
+            <div class="button-container">
+              <button type="button" onclick="generateLink()">
+                Générer le Lien Unique
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Section Minuteur -->
+        <section class="timer-section">
+          <h2>Définir la Durée de l'Examen</h2>
+          <div class="input-group">
+            <label for="exam-duration">
+              <i class="fas fa-clock"></i> Durée de l'Examen (en minutes) :
+            </label>
+            <input
+              type="number"
+              id="exam-duration"
+              placeholder="Entrez la durée de l'examen en minutes"
+              required
+            />
+          </div>
+        </section>
+      </div>
+
+      <!-- Sélectionner le Type de Question -->
+      <section class="question-type">
+        <h2>Sélectionner le Type de Question</h2>
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn"
+            id="direct-question-btn"
+            aria-label="Question Directe"
+          >
+            Question Directe
+          </button>
+          <button
+            type="button"
+            class="btn"
+            id="qcm-question-btn"
+            aria-label="Question à Choix Multiples"
+          >
+            Question à Choix Multiples
+          </button>
+        </div>
+      </section>
+
+      <!-- Formulaire de Question (Directe et QCM) -->
+      <section id="question-form">
+        <!-- Question Directe -->
+        <div id="direct-question-form" class="question-form hidden">
+          <h3>Question Directe</h3>
+          <div class="input-group">
+            <label for="direct-question-text">Texte de la Question :</label>
+            <input
+              type="text"
+              id="direct-question-text"
+              placeholder="Entrez le texte de la question"
+              required
+            />
+          </div>
+          <div class="input-group">
+            <label for="direct-error-tolerance"
+              >Tolérance à l'Erreur (%):</label
+            >
+            <input
+              type="number"
+              id="direct-error-tolerance"
+              placeholder="Entrez le pourcentage de tolérance"
+              required
+            />
+          </div>
+          <div class="input-group">
+            <label for="direct-correct-answer">Bonne Réponse :</label>
+            <input
+              type="text"
+              id="direct-correct-answer"
+              placeholder="Entrez la bonne réponse"
+              required
+            />
+          </div>
+          <div class="input-group">
+            <label for="qcm-marks">Attribuer des Points :</label>
+            <input
+              type="number"
+              id="qcm-marks"
+              placeholder="Entrez le nombre de points"
+              required
+            />
+          </div>
+          <div class="input-group">
+            <label for="media-upload"
+              >Ajouter un média (image, audio ou vidéo) :</label
+            >
+            <input
+              type="file"
+              id="media-upload"
+              accept="image/*,audio/*,video/*"
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="question-duration"
+              >Durée pour cette question (en secondes) :</label
+            >
+            <input
+              type="number"
+              id="question-duration"
+              placeholder="Entrez la durée en secondes"
+              required
+            />
+          </div>
+          <button
+            type="button"
+            class="btn add-question"
+            onclick="addDirectQuestion()"
+          >
+            Ajouter la Question
+          </button>
+        </div>
+
+        <!-- Question QCM -->
+        <div id="qcm-question-form" class="question-form hidden">
+          <h3>Question à Choix Multiples</h3>
+          <div class="input-group">
+            <label for="qcm-question-text">Texte de la Question :</label>
+            <input
+              type="text"
+              id="qcm-question-text"
+              placeholder="Entrez le texte de la question"
+              required
+            />
+          </div>
+
+          <div class="options-container">
+            <button type="button" class="btn" onclick="addQCMOption()">
+              Ajouter une Option
+            </button>
+            <div id="qcm-options" class="qcm-options-list"></div>
+          </div>
+
+
+          <div class="input-group">
+            <label for="qcm-marks">Attribuer des Points :</label>
+            <input
+              type="number"
+              id="qcm-marks"
+              placeholder="Entrez le nombre de points"
+              required
+            />
+          </div>
+          <div class="input-group">
+            <label for="media-upload"
+              >Ajouter un média (image, audio ou vidéo) :</label
+            >
+            <input
+              type="file"
+              id="media-upload"
+              accept="image/*,audio/*,video/*"
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="question-duration"
+              >Durée pour cette question (en secondes) :</label
+            >
+            <input
+              type="number"
+              id="question-duration"
+              placeholder="Entrez la durée en secondes"
+              required
+            />
+          </div>
+
+          <button
+            type="button"
+            class="btn add-question"
+            onclick="addQCMQuestion()"
+          >
+            Ajouter la Question
+          </button>
+        </div>
+
+        <div id="qcm-questions-list" class="question-list"></div>
+      </section>
+
+      <!-- Actions sur l'Examen -->
+      <section class="exam-actions">
+        <button type="button" class="btn" onclick="saveExam()">
+          Enregistrer l'Examen
+        </button>
+        <button type="button" class="btn" onclick="previewExam()">
+          Aperçu de l'Examen
+        </button>
+      </section>
+    </div>
+
+    <script src="../JS/create_exam.js"></script>
+  </body>
 </html>
