@@ -1,12 +1,11 @@
-// backend/app.js
-const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const connectDB = require('./config/db');
-const path = require('path');
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import connectDB from './config/db.js';
+import path from 'path';
 
 // Load environment variables
-dotenv.config({ path: path.join(__dirname, '.env') });
+dotenv.config();
 
 const app = express();
 
@@ -48,7 +47,7 @@ app.use((err, req, res, next) => {
 
 // Handle 404 routes
 app.all('*', (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+  next(new Error(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
 module.exports = app;
