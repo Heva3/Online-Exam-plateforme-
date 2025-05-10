@@ -1,13 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=git, initial-scale=1.0">
-    <title>take</title>
-    <link rel="stylesheet" href="../css/style.css" />
-</head>
-<body>
-    <p>Hello this is an exam page </p>
-    
-</body>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Passer l'Examen</title>
+    <link rel="stylesheet" href="../CSS/take_exams.css" />
+  </head>
+  <body>
+    <!-- Écran de Géolocalisation -->
+    <div id="geolocation-screen" class="screen">
+      <h1>Bienvenue à l'Examen !</h1>
+      <p>Veuillez autoriser l'accès à votre position pour commencer.</p>
+      <button id="allow-location-btn" class="primary-btn">
+        Autoriser la Localisation
+      </button>
+      <div id="geo-error" class="error-message"></div>
+    </div>
+
+    <!-- Écran de l'Examen -->
+    <div id="exam-screen" class="screen hidden">
+      <div class="timer-bar-container">
+        <div id="timer-bar"></div>
+      </div>
+      <div class="timer-text">
+        Temps restant : <span id="time-left">30</span>s
+      </div>
+      <div id="question-container">
+        <!-- La question sera injectée ici -->
+      </div>
+      <button id="next-btn" class="primary-btn">Suivant</button>
+    </div>
+
+    <!-- Écran des Résultats -->
+    <div id="result-screen" class="screen hidden">
+      <h2 class="result-title">Examen Terminé !</h2>
+      <p id="final-score" class="score-text"></p>
+      <p id="motivation-message" class="motivation-text"></p>
+    </div>
+
+    <script src="../JS/take_exam.js"></script>
+  </body>
 </html>
