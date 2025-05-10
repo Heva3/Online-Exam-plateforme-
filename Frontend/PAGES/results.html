@@ -1,12 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../css/style.css" />
-</head>
-<body>
-    <p>heyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy</p>
-</body>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Résultats des Examens</title>
+    <link rel="stylesheet" href="../CSS/resultsexam.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Résultats des Examens des Étudiants</h1>
+
+      <!-- État de chargement simulé -->
+      <div id="loading" class="loading">Chargement des résultats...</div>
+
+      <!-- Tableau des résultats -->
+      <table id="results-table">
+        <thead>
+          <tr>
+            <th>Nom de l'Étudiant</th>
+            <th>Titre de l'Examen</th>
+            <th>Score (/100)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Les lignes de données seront ajoutées dynamiquement -->
+        </tbody>
+      </table>
+    </div>
+
+    <script src="../JS/resultsexam.js"></script>
+  </body>
 </html>
