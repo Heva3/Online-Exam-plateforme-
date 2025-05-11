@@ -25,6 +25,7 @@ let score = 0;
 let timer;
 let timeLeft = 30;
 let studentLocation = null;
+let examId = null; // Variable for the exam ID extracted from the link
 
 // ===== Sélection des éléments DOM =====
 const geoScreen = document.getElementById("geolocation-screen");
@@ -38,6 +39,20 @@ const questionContainer = document.getElementById("question-container");
 const nextBtn = document.getElementById("next-btn");
 const finalScore = document.getElementById("final-score");
 const motivationMessage = document.getElementById("motivation-message");
+
+// ===== Fonction pour extraire l'ID de l'examen à partir de l'URL =====
+function getExamIdFromUrl() {
+  const url = window.location.href;
+  const match = url.match(/exam\/([a-zA-Z0-9]{9})/);
+  if (match) {
+    examId = match[1]; // Récupère l'ID de l'examen depuis l'URL
+  } else {
+    alert("Erreur : L'ID de l'examen est manquant ou incorrect.");
+  }
+}
+
+// Appeler la fonction au chargement de la page
+window.onload = getExamIdFromUrl;
 
 // ===== Gestion de la Géolocalisation =====
 allowLocationBtn.addEventListener("click", () => {

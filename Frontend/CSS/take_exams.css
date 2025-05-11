@@ -41,8 +41,8 @@ body {
   animation: popUp 0.8s ease-out;
 }
 
-p{
-    color: gray;
+p {
+  color: gray;
 }
 
 /* Animation d'entrée des écrans */
@@ -207,6 +207,56 @@ p{
   font-size: 18px;
   color: #333;
   font-style: italic;
+}
+
+/* Écran d'Entrée du Lien */
+#link-input-screen {
+  background-color: #f9f9f9;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+#link-input-screen h1 {
+  font-size: 26px;
+  color: #333;
+}
+
+#link-input-screen p {
+  margin: 15px 0;
+  font-size: 18px;
+  color: #666;
+}
+
+#link-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#exam-link {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  color: #333;
+}
+
+#exam-link:focus {
+  border-color: #30d0d3;
+  outline: none;
+}
+
+.primary-btn {
+  width: 100%;
+}
+
+#link-error {
+  font-size: 14px;
+  color: red;
+  margin-top: 10px;
 }
 
 /* Réactivité mobile */

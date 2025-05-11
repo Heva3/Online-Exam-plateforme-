@@ -7,8 +7,26 @@
     <link rel="stylesheet" href="../CSS/take_exams.css" />
   </head>
   <body>
+    <!-- Écran d'Entrée du Lien -->
+    <div id="link-input-screen" class="screen">
+      <h1>Entrez le Lien de l'Examen</h1>
+      <p>Veuillez entrer le lien pour accéder à l'examen.</p>
+      <form id="link-form">
+        <label for="exam-link">Lien de l'examen :</label>
+        <input
+          type="url"
+          id="exam-link"
+          name="exam-link"
+          placeholder="Entrez le lien ici"
+          required
+        />
+        <button type="submit" class="primary-btn">Soumettre</button>
+      </form>
+      <div id="link-error" class="error-message"></div>
+    </div>
+
     <!-- Écran de Géolocalisation -->
-    <div id="geolocation-screen" class="screen">
+    <div id="geolocation-screen" class="screen hidden">
       <h1>Bienvenue à l'Examen !</h1>
       <p>Veuillez autoriser l'accès à votre position pour commencer.</p>
       <button id="allow-location-btn" class="primary-btn">
