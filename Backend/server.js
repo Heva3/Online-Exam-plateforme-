@@ -1,5 +1,6 @@
+/* 
 import express from 'express';
-import connectDB from './config/db.js'; // Make sure to import the connectDB function
+import connectDB from './config/db.js'; 
 import cors from 'cors';
 import dotenv from 'dotenv';
 
@@ -22,4 +23,34 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+});
+ */
+/* import app from './app.js'; // Importer l'app de app.js
+import dotenv from 'dotenv';
+
+dotenv.config(); // Charger les variables d'environnement
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+ */
+/*import dotenv from 'dotenv';
+dotenv.config(); */
+
+/* import connectDB from './config/db.js';
+connectDB(); */ 
+import dotenv from 'dotenv';
+dotenv.config(); // CHARGE LES VARIABLES D'ENVIRONNEMENT
+
+import app from './app.js';
+
+const PORT = process.env.PORT || 5500;
+
+console.log(" server.js: app importé");
+
+app.listen(PORT, () => {
+  console.log(` Server running on http://localhost:${PORT}`);
 });

@@ -1,53 +1,49 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import connectDB from './config/db.js';
-import path from 'path';
 
-// Load environment variables
+import express from 'express';
+import dotenv from 'dotenv';
+import connectDB from './config/db.js'; // adapte le chemin si nécessaire
+
+import authRoutes from './routes/authRoutes.js';
+import examRoutes from './routes/examRoutes.js';
+import questionRoutes from './controllers/questionController'
+import questionRoutes from './controllers/questionController.js';
+
+
+
+
+
+
+import cors from 'cors';
+
+
+
+
+
 dotenv.config();
+
+connectDB(); // Connexion à MongoDB
+
 
 const app = express();
 
-// 1. Database Connection
-connectDB();
+app.use(express.json());
 
-// 2. Global Middlewares
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:8080', // Match your frontend port
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  origin: ['http://127.0.0.1:5500', 'http://localhost:5500'],
+  methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Body parsers
-app.use(express.json({ limit: '10kb' })); // Limit payload size
-app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
-// 3. Routes
-app.get('/', (req, res) => {
-  res.send("Bienvenue sur le backend de la plateforme d'examen 🎓");
-});
-
-// Auth Routes
-const authRoutes = require('./routes/authRoutes');
+console.log(" app.js: Registering /api/auth");
 app.use('/api/auth', authRoutes);
 
-// 4. Error Handling (should be last middleware)
-app.use((err, req, res, next) => {
-  err.statusCode = err.statusCode || 500;
-  err.status = err.status || 'error';
+console.log(" app.js: Registering /api/exams");
+app.use('/api/exams', examRoutes);
 
-  res.status(err.statusCode).json({
-    status: err.status,
-    message: err.message,
-    error: process.env.NODE_ENV === 'development' ? err.stack : undefined
-  });
-});
+/* console.log(" app.js: Registering /api/questions");
+app.use('/api/questions', questionRoutes); */
 
-// Handle 404 routes
-app.all('*', (req, res, next) => {
-  next(new Error(`Can't find ${req.originalUrl} on this server!`, 404));
-});
+console.log("app.js: All routes registered!");
 
-module.exports = app;
+export default app;
