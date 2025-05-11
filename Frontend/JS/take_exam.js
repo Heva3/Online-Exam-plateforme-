@@ -1,24 +1,3 @@
-// ===== Données simulées =====
-const questions = [
-  {
-    type: "qcm",
-    question: "Quels sont des langages de programmation ?",
-    options: ["HTML", "Python", "CSS", "JavaScript"],
-    correctAnswers: ["Python", "JavaScript"],
-  },
-  {
-    type: "direct",
-    question: "Quelle est la capitale de la France ?",
-    correctAnswer: "Paris",
-  },
-  {
-    type: "qcm",
-    question: "Sélectionnez les nombres premiers.",
-    options: ["2", "4", "5", "8"],
-    correctAnswers: ["2", "5"],
-  },
-];
-
 // ===== Variables globales =====
 let currentQuestionIndex = 0;
 let score = 0;

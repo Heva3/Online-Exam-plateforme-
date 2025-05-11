@@ -1,12 +1,15 @@
+// create_exam.js
+
 // Handle link generation
 function generateLink() {
   const randomId = Math.random().toString(36).substr(2, 9);
   document.getElementById(
     "unique-link"
   ).value = `https://exam-platform.com/exam/${randomId}`;
+  alert("Lien généré avec succès !");
 }
 
-// Use addEventListener for better handling of events
+// Handle showing the correct form
 document.getElementById("direct-question-btn").addEventListener("click", () => {
   document.getElementById("direct-question-form").classList.remove("hidden");
   document.getElementById("qcm-question-form").classList.add("hidden");
@@ -17,296 +20,313 @@ document.getElementById("qcm-question-btn").addEventListener("click", () => {
   document.getElementById("direct-question-form").classList.add("hidden");
 });
 
-// Helper function to create input fields
-function createInputField(id, placeholder, type = "text") {
+// Helper to create an input field
+function createInput(name, placeholder) {
   const input = document.createElement("input");
-  input.type = type;
+  input.type = "text";
+  input.name = name;
   input.placeholder = placeholder;
-  input.id = id;
+  input.required = true;
+  input.className = "option-input";
   return input;
 }
 
-// Handle uploaded media
-function getUploadedMediaInfo() {
-  const mediaInput = document.getElementById("media-upload");
-  if (mediaInput.files.length > 0) {
-    const file = mediaInput.files[0];
-    const fileType = file.type.split("/")[0]; // image, audio, video
-    return { name: file.name, type: fileType };
+// Handle uploaded media (returns media URL or file name)
+function handleUploadedMedia(inputElement) {
+  const file = inputElement.files[0];
+  if (file) {
+    return URL.createObjectURL(file); // For preview if needed
   }
-  return null;
+  return "";
 }
 
-// QCM option addition with checkboxes for correct answers
-let optionCount = 1;
+// QCM Option Addition
+// Function to add a new option
 function addQCMOption() {
-  const container = document.getElementById("qcm-options");
+  const optionsContainer = document.getElementById("qcm-options");
 
-  const optionId = `option-${optionCount}`;
-  const wrapper = document.createElement("div");
-  wrapper.className = "option-wrapper";
-  wrapper.id = `wrapper-${optionId}`;
+  const optionDiv = document.createElement("div");
+  optionDiv.className = "option-item";
 
-  const checkbox = document.createElement("input");
-  checkbox.type = "checkbox";
-  checkbox.className = "correct-checkbox";
-  checkbox.value = optionId;
-  checkbox.title = "Cochez si c'est une bonne réponse";
+  // Input field
+  const optionInput = createInput("qcm-option", "Entrez une option");
 
-  const input = createInputField(optionId, `Option ${optionCount}`);
-  input.className = "qcm-option";
+  // Actions (checkbox + delete)
+  const actionsDiv = document.createElement("div");
+  actionsDiv.className = "option-actions";
 
+  // Correct answer checkbox
+  const correctCheckbox = document.createElement("input");
+  correctCheckbox.type = "checkbox";
+  correctCheckbox.title = "Cochez si c'est la bonne réponse";
+  correctCheckbox.className = "correct-checkbox";
+
+  // Delete button
   const deleteBtn = document.createElement("button");
-  deleteBtn.textContent = "❌";
-  deleteBtn.className = "delete-option-btn";
-  deleteBtn.addEventListener("click", () => {
-    container.removeChild(wrapper);
-    optionCount = container.querySelectorAll(".option-wrapper").length + 1;
-  });
+  deleteBtn.type = "button";
+  deleteBtn.className = "delete-btn";
+  deleteBtn.title = "Supprimer cette option";
 
-  wrapper.appendChild(checkbox);
-  wrapper.appendChild(input);
-  wrapper.appendChild(deleteBtn);
-  container.appendChild(wrapper);
+  const deleteIcon = document.createElement("i");
+  deleteIcon.className = "fa-solid fa-trash";
 
-  optionCount++;
+  deleteBtn.appendChild(deleteIcon);
+
+  deleteBtn.onclick = function () {
+    optionsContainer.removeChild(optionDiv);
+  };
+
+  // Assemble
+  actionsDiv.appendChild(correctCheckbox);
+  actionsDiv.appendChild(deleteBtn);
+
+  optionDiv.appendChild(optionInput);
+  optionDiv.appendChild(actionsDiv);
+
+  optionsContainer.appendChild(optionDiv);
 }
 
-// Add direct question
+// Clear Direct Question Fields
+function clearDirectFields() {
+  document.getElementById("direct-question-text").value = "";
+  document.getElementById("direct-error-tolerance").value = "";
+  document.getElementById("direct-correct-answer").value = "";
+  document.getElementById("direct-marks").value = "";
+  document.getElementById("direct-media-upload").value = "";
+  document.getElementById("direct-question-duration").value = "";
+}
+
+// Clear QCM Question Fields
+function clearQCMFields() {
+  document.getElementById("qcm-question-text").value = "";
+  document.getElementById("qcm-marks").value = "";
+  document.getElementById("qcm-media-upload").value = "";
+  document.getElementById("qcm-question-duration").value = "";
+  document.getElementById("qcm-options").innerHTML = "";
+}
+
+// Add Direct Question
 function addDirectQuestion() {
-  const question = document.getElementById("direct-question-text").value;
-  const tolerance = document.getElementById("direct-error-tolerance").value;
-  const answer = document.getElementById("direct-correct-answer").value;
-  const marks = document.getElementById("qcm-marks").value;
-  const duration = document.getElementById("question-duration").value;
-  const media = getUploadedMediaInfo();
+  const questionText = document.getElementById("direct-question-text").value;
+  const errorTolerance = document.getElementById(
+    "direct-error-tolerance"
+  ).value;
+  const correctAnswer = document.getElementById("direct-correct-answer").value;
+  const marks = document.getElementById("direct-marks").value;
+  const media = handleUploadedMedia(
+    document.getElementById("direct-media-upload")
+  );
+  const duration = document.getElementById("direct-question-duration").value;
 
-  if (!question || !tolerance || !answer || !marks || !duration) {
-    return alert("Veuillez remplir tous les champs.");
-  }
+  const questionList = document.getElementById("qcm-questions-list");
+  const questionDiv = document.createElement("div");
+  questionDiv.className = "question-item";
 
-  let mediaHTML = "";
-  if (media) {
-    if (media.type === "image") {
-      mediaHTML = `<p class="media"><strong>Image:</strong> ${media.name}</p>`;
-    } else if (media.type === "audio") {
-      mediaHTML = `<p class="media"><strong>Audio:</strong> ${media.name}</p>`;
-    } else if (media.type === "video") {
-      mediaHTML = `<p class="media"><strong>Vidéo:</strong> ${media.name}</p>`;
+  questionDiv.innerHTML = `
+    <h4>Question Directe:</h4>
+    <p><strong>Texte:</strong> <span class="direct-question-text">${questionText}</span></p>
+    <p><strong>Tolérance d'erreur:</strong> <span class="direct-error-tolerance">${errorTolerance}</span>%</p>
+    <p><strong>Bonne Réponse:</strong> <span class="direct-correct-answer">${correctAnswer}</span></p>
+    <p><strong>Points:</strong> <span class="direct-marks">${marks}</span></p>
+    <p><strong>Durée:</strong> <span class="direct-duration">${duration}</span> secondes</p>
+    ${
+      media
+        ? `<p><strong>Média:</strong> <a class="direct-media" href="${media}" target="_blank">Voir le média</a></p>`
+        : ""
     }
-  }
+    <div class="question-actions">
+      <button type="button" class="btn-action" onclick="editDirectQuestion(this)">Modifier</button>
+      <button type="button" class="btn-action btn-delete" onclick="deleteDirectQuestion(this)">Supprimer</button>
+    </div>
+  `;
 
-  const questionCard = document.createElement("div");
-  questionCard.className = "question-card";
-  questionCard.innerHTML = `
-        <h4>Question Directe :</h4>
-        <p class="question"><strong>Question:</strong> ${question}</p>
-        ${mediaHTML}
-        <p class="answer"><strong>Bonne Réponse:</strong> ${answer}</p>
-        <p class="tolerance"><strong>Tolérance d'Erreur:</strong> ±${tolerance}%</p>
-        <p class="duration"><strong>Durée:</strong> ${duration} secondes</p>
-        <p class="marks"><strong>Score:</strong> ${marks}</p>
-        <button class="modify-question-btn">Modifier</button>
-    `;
+  questionList.appendChild(questionDiv);
 
-  // Append to the list
-  document.getElementById("qcm-questions-list").appendChild(questionCard);
-
-  // Modify logic
-  const modifyBtn = questionCard.querySelector(".modify-question-btn");
-  modifyBtn.addEventListener("click", () => {
-    // Get elements to update later
-    const questionEl = questionCard.querySelector(".question");
-    const answerEl = questionCard.querySelector(".answer");
-    const toleranceEl = questionCard.querySelector(".tolerance");
-    const durationEl = questionCard.querySelector(".duration");
-    const marksEl = questionCard.querySelector(".marks");
-
-    // Fill form fields
-    document.getElementById("direct-question-text").value =
-      questionEl.textContent.replace("Question:", "").trim();
-    document.getElementById("direct-correct-answer").value =
-      answerEl.textContent.replace("Bonne Réponse:", "").trim();
-    document.getElementById("direct-error-tolerance").value =
-      toleranceEl.textContent
-        .replace("Tolérance d'Erreur: ±", "")
-        .replace("%", "")
-        .trim();
-    document.getElementById("question-duration").value = durationEl.textContent
-      .replace("Durée:", "")
-      .replace("secondes", "")
-      .trim();
-    document.getElementById("qcm-marks").value = marksEl.textContent
-      .replace("Score:", "")
-      .trim();
-
-    // Change button to update
-    modifyBtn.textContent = "Mettre à jour";
-
-    // Replace click behavior
-    modifyBtn.onclick = () => {
-      const newQ = document.getElementById("direct-question-text").value;
-      const newA = document.getElementById("direct-correct-answer").value;
-      const newT = document.getElementById("direct-error-tolerance").value;
-      const newD = document.getElementById("question-duration").value;
-      const newM = document.getElementById("qcm-marks").value;
-
-      // Update UI
-      questionEl.innerHTML = `<strong>Question:</strong> ${newQ}`;
-      answerEl.innerHTML = `<strong>Bonne Réponse:</strong> ${newA}`;
-      toleranceEl.innerHTML = `<strong>Tolérance d'Erreur:</strong> ±${newT}%`;
-      durationEl.innerHTML = `<strong>Durée:</strong> ${newD} secondes`;
-      marksEl.innerHTML = `<strong>Score:</strong> ${newM}`;
-
-      clearDirectFields();
-      modifyBtn.textContent = "Modifier";
-      modifyBtn.onclick = null;
-      modifyBtn.addEventListener("click", arguments.callee); // Restore edit mode
-    };
-  });
-
+  alert("Question directe ajoutée avec succès!");
   clearDirectFields();
 }
 
-function clearDirectFields() {
-  document.getElementById("direct-question-text").value = "";
-  document.getElementById("direct-correct-answer").value = "";
-  document.getElementById("direct-error-tolerance").value = "";
-  document.getElementById("question-duration").value = "";
-  document.getElementById("qcm-marks").value = "";
+// Allow Editing Direct Question
+function editDirectQuestion(button) {
+  const questionDiv = button.closest(".question-item");
+
+  const textSpan = questionDiv.querySelector(".direct-question-text");
+  const errorToleranceSpan = questionDiv.querySelector(
+    ".direct-error-tolerance"
+  );
+  const correctAnswerSpan = questionDiv.querySelector(".direct-correct-answer");
+  const marksSpan = questionDiv.querySelector(".direct-marks");
+  const durationSpan = questionDiv.querySelector(".direct-duration");
+  const mediaLink = questionDiv.querySelector(".direct-media");
+
+  const newText = prompt(
+    "Modifier le texte de la question:",
+    textSpan.textContent
+  );
+  if (newText !== null) textSpan.textContent = newText;
+
+  const newErrorTolerance = prompt(
+    "Modifier la tolérance d'erreur (%):",
+    errorToleranceSpan.textContent
+  );
+  if (newErrorTolerance !== null)
+    errorToleranceSpan.textContent = newErrorTolerance;
+
+  const newCorrectAnswer = prompt(
+    "Modifier la bonne réponse:",
+    correctAnswerSpan.textContent
+  );
+  if (newCorrectAnswer !== null)
+    correctAnswerSpan.textContent = newCorrectAnswer;
+
+  const newMarks = prompt("Modifier les points:", marksSpan.textContent);
+  if (newMarks !== null) marksSpan.textContent = newMarks;
+
+  const newDuration = prompt(
+    "Modifier la durée (en secondes):",
+    durationSpan.textContent
+  );
+  if (newDuration !== null) durationSpan.textContent = newDuration;
+
+  if (mediaLink) {
+    const newMediaUrl = prompt(
+      "Modifier l'URL du média (laisser vide pour ne rien changer):",
+      mediaLink.href
+    );
+    if (newMediaUrl !== null && newMediaUrl.trim() !== "") {
+      mediaLink.href = newMediaUrl;
+    }
+  }
+
+  alert("Question directe modifiée avec succès!");
 }
 
-// Function to add QCM question
+//Delete Direct questions
+function deleteDirectQuestion(button) {
+  if (confirm("Êtes-vous sûr de vouloir supprimer cette question ?")) {
+    const questionDiv = button.closest(".question-item");
+    questionDiv.remove();
+    alert("Question supprimée !");
+  }
+}
+
+// Add QCM Question
 function addQCMQuestion() {
-  const question = document.getElementById("qcm-question-text").value;
+  const questionText = document.getElementById("qcm-question-text").value;
   const marks = document.getElementById("qcm-marks").value;
-  const duration = document.getElementById("question-duration").value;
-
-  // Check if all required fields are filled
-  if (!question.trim() || !marks.trim() || !duration.trim()) {
-    return alert("Veuillez remplir tous les champs.");
-  }
-
-  // Check if there are any options added
-  const options = Array.from(document.querySelectorAll(".qcm-option")).map(
-    (opt) => opt.value
+  const media = handleUploadedMedia(
+    document.getElementById("qcm-media-upload")
   );
+  const duration = document.getElementById("qcm-question-duration").value;
 
-  if (options.length === 0 || options.some((opt) => !opt.trim())) {
-    return alert("Veuillez ajouter au moins une option.");
-  }
+  const optionsContainer = document.getElementById("qcm-options");
+  const options = Array.from(
+    optionsContainer.querySelectorAll(".option-item")
+  ).map((optionDiv) => {
+    const text = optionDiv.querySelector('input[type="text"]').value;
+    const isCorrect = optionDiv.querySelector('input[type="checkbox"]').checked;
+    return { text, isCorrect };
+  });
 
-  // Create the question card
-  const questionCard = document.createElement("div");
-  questionCard.className = "question-card";
+  const questionList = document.getElementById("qcm-questions-list");
+  const questionDiv = document.createElement("div");
+  questionDiv.className = "question-item";
 
-  // Create the inner HTML of the question card
-  questionCard.innerHTML = `
-      <h4>Question à Choix Multiples :</h4>
-      <p><strong>Question:</strong> ${question}</p>
-      <ul>${options.map((opt, i) => `<li>${i + 1}. ${opt}</li>`).join("")}</ul>
-      <p><strong>Durée:</strong> ${duration} secondes</p>
-      <p><strong>Score:</strong> ${marks}</p>
-      <button class="modify-question-btn">Modifier</button>
-    `;
+  let optionsHTML = `
+    <div class="options-list">
+      ${options
+        .map(
+          (opt) => `
+          <div class="option-item-display">
+            <span class="option-text">- ${opt.text}</span>
+            ${
+              opt.isCorrect
+                ? '<span class="option-correct"> => (La bonne réponse)</span>'
+                : ""
+            }
+          </div>
+        `
+        )
+        .join("")}
+    </div>
+  `;
 
-  // Append the question card to the list
-  document.getElementById("qcm-questions-list").appendChild(questionCard);
+  questionDiv.innerHTML = `
+    <div class="question-content">
+      <h4>Question QCM</h4>
+      <p><strong>Texte:</strong> <span class="question-text">${questionText}</span></p>
+      <p><strong>Points:</strong> <span class="question-points">${marks}</span></p>
+      <p><strong>Durée:</strong> <span class="question-duration">${duration}</span> secondes</p>
+      ${
+        media
+          ? `<p><strong>Média:</strong> <a href="${media}" target="_blank">Voir le média</a></p>`
+          : ""
+      }
+      <div><strong>Options:</strong>${optionsHTML}</div>
+      
+      <div class="question-actions">
+        <button type="button" class="btn-action" onclick="editQCMQuestion(this)">Modifier</button>
+        <button type="button" class="btn-action btn-delete" onclick="deleteQCMQuestion(this)">Supprimer</button>
+      </div>
+    </div>
+  `;
 
-  // Clear the form fields after adding the question
+  questionList.appendChild(questionDiv);
+
+  alert("Question QCM ajoutée avec succès!");
   clearQCMFields();
 }
 
-function clearQCMFields() {
-  document.getElementById("qcm-question-text").value = "";
-  document.getElementById("qcm-marks").value = "";
-  document.getElementById("question-duration").value = "";
-  document.getElementById("qcm-options").innerHTML = ""; // Clear options list
-}
+// Allow Editing QCM Question
+function editQCMQuestion(button) {
+  const questionDiv = button.closest(".question-item");
 
-function clearQCMFields() {
-  document.getElementById("qcm-question-text").value = "";
-  document.getElementById("qcm-marks").value = "";
-  document.getElementById("question-duration").value = "";
-  // Optionally clear the options list
-  document.getElementById("qcm-options").innerHTML = "";
-}
+  const textSpan = questionDiv.querySelector(".question-text");
+  const pointsSpan = questionDiv.querySelector(".question-points");
+  const durationSpan = questionDiv.querySelector(".question-duration");
 
-function clearQCMFields() {
-  document.getElementById("qcm-question-text").value = "";
-  document.getElementById("qcm-marks").value = "";
-  document.getElementById("question-duration").value = "";
-  // Optionally clear the options list
-  document.getElementById("qcm-options").innerHTML = "";
-}
-
-function clearQCMFields() {
-  document.getElementById("qcm-question-text").value = "";
-  document.getElementById("qcm-marks").value = "";
-  document.getElementById("question-duration").value = "";
-  document.getElementById("media-upload").value = "";
-  // Optionally clear the options list
-  document.getElementById("qcm-options").innerHTML = "";
-}
-
-// Helper function to show error message
-function showError(message) {
-  const errorMessage = document.createElement("div");
-  errorMessage.className = "error-message";
-  errorMessage.textContent = message;
-  document.getElementById("form-error-container").appendChild(errorMessage);
-  setTimeout(() => errorMessage.remove(), 3000); // Remove error message after 3 seconds
-}
-
-// Helper function to clear the QCM fields after adding/updating
-function clearQCMFields() {
-  document.getElementById("qcm-question-text").value = "";
-  document.getElementById("qcm-options").innerHTML = "";
-  document.getElementById("qcm-marks").value = "";
-  document.getElementById("question-duration").value = "";
-  optionCount = 1;
-}
-
-// Media handler (assuming it's defined)
-function getUploadedMediaInfo() {
-  const mediaInput = document.getElementById("media-upload");
-  if (mediaInput.files.length > 0) {
-    const file = mediaInput.files[0];
-    return { name: file.name, type: file.type.split("/")[0] }; // Extract file type
+  const newText = prompt(
+    "Modifier le texte de la question:",
+    textSpan.textContent
+  );
+  if (newText !== null) {
+    textSpan.textContent = newText;
   }
-  return null;
+
+  const newPoints = prompt("Modifier les points:", pointsSpan.textContent);
+  if (newPoints !== null) {
+    pointsSpan.textContent = newPoints;
+  }
+
+  const newDuration = prompt(
+    "Modifier la durée (en secondes):",
+    durationSpan.textContent
+  );
+  if (newDuration !== null) {
+    durationSpan.textContent = newDuration;
+  }
+
+  alert("Question QCM modifiée avec succès!");
 }
 
-// Clear QCM fields
-function clearQCMFields() {
-  document.getElementById("qcm-question-text").value = "";
-  document.getElementById("qcm-options").innerHTML = "";
-  document.getElementById("qcm-marks").value = "";
-  optionCount = 1;
+//Delete QCM questions
+function deleteQCMQuestion(button) {
+  const confirmDelete = confirm(
+    "Êtes-vous sûr de vouloir supprimer cette question ?"
+  );
+  if (confirmDelete) {
+    const questionDiv = button.closest(".question-item");
+    questionDiv.remove();
+    alert("Question QCM supprimée avec succès !");
+  }
 }
 
-// Clear direct fields
-function clearDirectFields() {
-  document.getElementById("direct-question-text").value = "";
-  document.getElementById("direct-error-tolerance").value = "";
-  document.getElementById("direct-correct-answer").value = "";
-  document.getElementById("media-upload").value = "";
-  document.getElementById("question-duration").value = "";
-}
-
-// Show error message
-function showError(message) {
-  const errorMessage = document.createElement("div");
-  errorMessage.textContent = message;
-  errorMessage.className = "error-message";
-  document.getElementById("form-error-container").appendChild(errorMessage);
-}
-
-// Placeholder save & preview
+// Save Exam (simple alert for now)
 function saveExam() {
-  alert("Examen sauvegardé avec succès !");
+  alert("Examen enregistré avec succès!");
 }
 
+// Preview Exam (basic for now)
 function previewExam() {
-  alert("Fonction Aperçu encore en cours de développement.");
+  alert("Aperçu de l'examen en cours...");
 }

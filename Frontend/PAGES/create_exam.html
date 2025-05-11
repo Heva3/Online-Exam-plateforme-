@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PROJECTS</title>
+    <title>Créer un Nouvel exam</title>
     <link rel="stylesheet" href="../css/Create_exam.css" />
     <link
       rel="stylesheet"
@@ -14,31 +14,34 @@
   <body>
     <div class="main-wrapper">
       <div class="container">
-        <h1>Créer un Nouvel Examen</h1>
+        <h1>Créer un Nouvel exam</h1>
 
-        <!-- Section Information de l'Examen -->
-        <section class="section">
-          <h2>Informations sur l'Examen</h2>
-          <form id="exam-form">
+        <form id="exam-form">
+          <!-- Section Information de l'exam -->
+          <div class="section">
+            <h2>Informations sur l'exam</h2>
+
             <div class="input-group">
               <label for="exam-title">
-                <i class="fas fa-pencil-alt"></i> Titre de l'Examen :
+                <i class="fas fa-pencil-alt"></i> Titre de l'exam :
               </label>
               <input
                 type="text"
                 id="exam-title"
-                placeholder="Entrez le titre de l'examen"
+                name="exam-title"
+                placeholder="Entrez le titre de l'exam"
                 required
               />
             </div>
 
             <div class="input-group">
               <label for="exam-description">
-                <i class="fas fa-align-left"></i> Description de l'Examen :
+                <i class="fas fa-align-left"></i> Description de l'exam :
               </label>
               <textarea
                 id="exam-description"
-                placeholder="Entrez la description de l'examen"
+                name="exam-description"
+                placeholder="Entrez la description de l'exam"
                 required
               ></textarea>
             </div>
@@ -50,6 +53,7 @@
               <input
                 type="text"
                 id="target-audience"
+                name="target-audience"
                 placeholder="Exemple : 2ème année MIP, S4, Groupe A"
                 required
               />
@@ -59,7 +63,7 @@
               <label for="unique-link">
                 <i class="fas fa-link"></i> Lien Unique :
               </label>
-              <input type="text" id="unique-link" readonly />
+              <input type="text" id="unique-link" name="unique-link" readonly />
             </div>
 
             <div class="button-container">
@@ -67,24 +71,26 @@
                 Générer le Lien Unique
               </button>
             </div>
-          </form>
-        </section>
-
-        <!-- Section Minuteur -->
-        <section class="timer-section">
-          <h2>Définir la Durée de l'Examen</h2>
-          <div class="input-group">
-            <label for="exam-duration">
-              <i class="fas fa-clock"></i> Durée de l'Examen (en minutes) :
-            </label>
-            <input
-              type="number"
-              id="exam-duration"
-              placeholder="Entrez la durée de l'examen en minutes"
-              required
-            />
           </div>
-        </section>
+
+          <!-- Section Minuteur -->
+          <fieldset class="timer-section">
+            <legend>Définir la Durée de l'exam</legend>
+
+            <div class="input-group">
+              <label for="exam-duration">
+                <i class="fas fa-clock"></i> Durée de l'exam (en minutes) :
+              </label>
+              <input
+                type="number"
+                id="exam-duration"
+                name="exam-duration"
+                placeholder="Entrez la durée en minutes"
+                required
+              />
+            </div>
+          </fieldset>
+        </form>
       </div>
 
       <!-- Sélectionner le Type de Question -->
@@ -110,71 +116,79 @@
         </div>
       </section>
 
-      <!-- Formulaire de Question (Directe et QCM) -->
+      <!-- Formulaires de Questions -->
       <section id="question-form">
         <!-- Question Directe -->
-        <div id="direct-question-form" class="question-form hidden">
+        <form id="direct-question-form" class="question-form hidden">
           <h3>Question Directe</h3>
+
           <div class="input-group">
             <label for="direct-question-text">Texte de la Question :</label>
             <input
               type="text"
               id="direct-question-text"
-              placeholder="Entrez le texte de la question"
+              name="direct-question-text"
+              placeholder="Entrez le texte"
               required
             />
           </div>
+
           <div class="input-group">
             <label for="direct-error-tolerance"
-              >Tolérance à l'Erreur (%):</label
+              >Tolérance à l'Erreur (%) :</label
             >
             <input
               type="number"
               id="direct-error-tolerance"
-              placeholder="Entrez le pourcentage de tolérance"
+              name="direct-error-tolerance"
+              placeholder="Entrez le pourcentage"
               required
             />
           </div>
+
           <div class="input-group">
             <label for="direct-correct-answer">Bonne Réponse :</label>
             <input
               type="text"
               id="direct-correct-answer"
+              name="direct-correct-answer"
               placeholder="Entrez la bonne réponse"
               required
             />
           </div>
+
           <div class="input-group">
-            <label for="qcm-marks">Attribuer des Points :</label>
+            <label for="direct-marks">Attribuer des Points :</label>
             <input
               type="number"
-              id="qcm-marks"
-              placeholder="Entrez le nombre de points"
+              id="direct-marks"
+              name="direct-marks"
+              placeholder="Entrez les points"
               required
             />
           </div>
+
           <div class="input-group">
-            <label for="media-upload"
-              >Ajouter un média (image, audio ou vidéo) :</label
-            >
+            <label for="direct-media-upload">Ajouter un média :</label>
             <input
               type="file"
-              id="media-upload"
+              id="direct-media-upload"
+              name="direct-media-upload"
               accept="image/*,audio/*,video/*"
             />
           </div>
 
           <div class="input-group">
-            <label for="question-duration"
-              >Durée pour cette question (en secondes) :</label
-            >
+            <label for="direct-question-duration">Durée (en secondes) :</label>
             <input
               type="number"
-              id="question-duration"
-              placeholder="Entrez la durée en secondes"
+              id="direct-question-duration"
+              name="direct-question-duration"
+              placeholder="Entrez la durée"
               required
             />
           </div>
+
           <button
             type="button"
             class="btn add-question"
@@ -182,24 +196,30 @@
           >
             Ajouter la Question
           </button>
-        </div>
+        </form>
 
         <!-- Question QCM -->
-        <div id="qcm-question-form" class="question-form hidden">
+        <form id="qcm-question-form" class="question-form hidden">
           <h3>Question à Choix Multiples</h3>
+
           <div class="input-group">
             <label for="qcm-question-text">Texte de la Question :</label>
             <input
               type="text"
               id="qcm-question-text"
-              placeholder="Entrez le texte de la question"
+              name="qcm-question-text"
+              placeholder="Entrez le texte"
               required
             />
           </div>
 
           <div class="options-container">
-            <button type="button" class="btn" onclick="addQCMOption()">
-              Ajouter une Option
+            <button
+              type="button"
+              class="btn add-option-btn"
+              onclick="addQCMOption()"
+            >
+              <i class="fa-solid fa-plus"></i> Ajouter une Option
             </button>
             <div id="qcm-options" class="qcm-options-list"></div>
           </div>
@@ -209,29 +229,29 @@
             <input
               type="number"
               id="qcm-marks"
-              placeholder="Entrez le nombre de points"
+              name="qcm-marks"
+              placeholder="Entrez les points"
               required
             />
           </div>
+
           <div class="input-group">
-            <label for="media-upload"
-              >Ajouter un média (image, audio ou vidéo) :</label
-            >
+            <label for="qcm-media-upload">Ajouter un média :</label>
             <input
               type="file"
-              id="media-upload"
+              id="qcm-media-upload"
+              name="qcm-media-upload"
               accept="image/*,audio/*,video/*"
             />
           </div>
 
           <div class="input-group">
-            <label for="question-duration"
-              >Durée pour cette question (en secondes) :</label
-            >
+            <label for="qcm-question-duration">Durée (en secondes) :</label>
             <input
               type="number"
-              id="question-duration"
-              placeholder="Entrez la durée en secondes"
+              id="qcm-question-duration"
+              name="qcm-question-duration"
+              placeholder="Entrez la durée"
               required
             />
           </div>
@@ -243,25 +263,25 @@
           >
             Ajouter la Question
           </button>
-        </div>
+        </form>
 
         <div id="qcm-questions-list" class="question-list"></div>
       </section>
 
-      <!-- Actions sur l'Examen -->
+      <!-- Actions sur l'exam -->
       <section class="exam-actions">
         <button type="button" class="btn" onclick="saveExam()">
-          Enregistrer l'Examen
+          Enregistrer l'exam
         </button>
         <button type="button" class="btn" onclick="previewExam()">
-          Aperçu de l'Examen
+          Aperçu de l'exam
         </button>
         <button
           type="button"
           class="btn"
           onclick="window.location.href='results.html';"
         >
-          Voir les résultats
+          Voir les Résultats
         </button>
       </section>
     </div>
