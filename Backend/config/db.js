@@ -15,4 +15,4 @@ const connectDB = async () => {
   }
 };
 
-export default connectDB;  // Use 'export' instead of 'module.exports'
+export default connectDB;  
