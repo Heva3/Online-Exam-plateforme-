@@ -8,6 +8,8 @@
   </head>
   <body>
     <main class="register-container">
+     
+
       <div class="registration-wrapper">
         <!-- LEFT SIDE: HERO SECTION -->
         <div class="hero-column">
@@ -26,8 +28,10 @@
         </div>
 
         <!-- RIGHT SIDE: REGISTRATION FORM -->
+        
         <div class="form-container">
-          <form class="registration-form" action="/submit_form" method="POST">
+           <form class="registration-form">
+         
             <h1 class="welcome-text">Inscription à la plateforme !</h1>
 
             <div class="login-tabs">
@@ -80,10 +84,10 @@
 
             <!-- Date de naissance -->
             <div class="form-group">
-              <label for="date" class="form-label">Date de naissance</label>
+              <label for="date_naissance" class="form-label">Date de naissance</label>
               <input
                 type="date"
-                id="date"
+                id="date_naissance"
                 name="date_naissance"
                 class="form-input"
                 required
@@ -126,6 +130,32 @@
               />
             </div>
 
+
+            <!-- Password -->
+            <div class="form-group">
+              <label for="password" class="form-label">Mot de passe</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="form-input"
+                placeholder="Entrez votre mot de passe"
+                required
+              />
+            </div>
+            <!-- Password Confirmation -->
+ <!-- <div class="form-group">
+  <label for="passwordConfirm" class="form-label">Confirmer le mot de passe</label>
+  <input
+    type="password"
+    id="passwordConfirm"
+    name="passwordConfirm"
+    class="form-input"
+    placeholder="Confirmez votre mot de passe"
+    required
+  />
+</div>  -->
+
             <!-- Submit -->
             <div class="container">
               <button type="submit" class="submit-button" id="glowSubmit">
@@ -133,8 +163,9 @@
               </button>
             </div>
           </form>
-        </div>
+        </div>''
       </div>
+      </form>
     </main>
     <script>
       const submitButton = document.getElementById("glowSubmit");
@@ -179,8 +210,37 @@
         });
         stars2 = [];
       }
+
     </script>
 
-    <script src="../js/main.js"></script>
+    <script>
+  const form = document.querySelector('.registration-form');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Empêche le rechargement de la page
+
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch('http://localhost:5500/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+      if (response.status === 201) {
+        alert(result.message); // => "Inscription réussie"
+      } else {
+        alert(result.message); // => "Email déjà utilisé" ou autre erreur
+      }
+    } catch (error) {
+      alert("Erreur réseau ou serveur.");
+      console.error(error);
+    }
+  });
+</script>
+
   </body>
 </html>
